@@ -60,6 +60,7 @@ function DataProcess({ showPreviewChunks = true }: { showPreviewChunks: boolean 
 
   const onSelectTrainWay = useCallback(
     (e: TrainingModeEnum) => {
+      //取消过滤
       if (!feConfigs?.isPlus && !TrainingTypeMap[e]?.openSource) {
         return toast({
           status: 'warning',

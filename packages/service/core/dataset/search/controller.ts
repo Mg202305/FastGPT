@@ -265,7 +265,7 @@ export async function searchDatasetData(
       return Array.from(resultIds);
     };
 
-    if (!collectionFilterMatch || !global.feConfigs.isPlus) return;
+    if (!collectionFilterMatch || !global.feConfigs.isPlus) return; //取消过滤
 
     let tagCollectionIdList: string[] | undefined = undefined;
     let createTimeCollectionIdList: string[] | undefined = undefined;

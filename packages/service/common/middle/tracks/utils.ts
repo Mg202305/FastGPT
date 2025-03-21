@@ -8,7 +8,7 @@ import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
 import { getAppLatestVersion } from '../../../core/app/version/controller';
 
 const createTrack = ({ event, data }: { event: TrackEnum; data: Record<string, any> }) => {
-  if (!global.feConfigs?.isPlus) return;
+  if (!global.feConfigs?.isPlus) return; //取消过滤
   addLog.info('Push tracks', {
     event,
     ...data

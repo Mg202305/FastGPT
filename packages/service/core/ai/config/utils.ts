@@ -8,7 +8,7 @@ import {
   EmbeddingModelItemType,
   TTSModelType,
   STTModelType,
-  ReRankModelItemType
+  RerankModelItemType
 } from '@fastgpt/global/core/ai/model.d';
 import { debounce } from 'lodash';
 import {
@@ -94,7 +94,7 @@ export const loadSystemModels = async (init = false) => {
   global.embeddingModelMap = new Map<string, EmbeddingModelItemType>();
   global.ttsModelMap = new Map<string, TTSModelType>();
   global.sttModelMap = new Map<string, STTModelType>();
-  global.reRankModelMap = new Map<string, ReRankModelItemType>();
+  global.reRankModelMap = new Map<string, RerankModelItemType>();
   // @ts-ignore
   global.systemDefaultModel = {};
 
@@ -162,6 +162,13 @@ export const loadSystemModels = async (init = false) => {
     if (!global.systemDefaultModel.rerank) {
       global.systemDefaultModel.rerank = Array.from(global.reRankModelMap.values())[0];
     }
+
+    // Sort model list
+    global.systemActiveModelList.sort((a, b) => {
+      const providerA = getModelProvider(a.provider);
+      const providerB = getModelProvider(b.provider);
+      return providerA.order - providerB.order;
+    });
 
     console.log('Load models success', JSON.stringify(global.systemActiveModelList, null, 2));
   } catch (error) {

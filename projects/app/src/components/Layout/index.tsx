@@ -18,7 +18,6 @@ import WorkorderButton from './WorkorderButton';
 
 const Navbar = dynamic(() => import('./navbar'));
 const NavbarPhone = dynamic(() => import('./navbarPhone'));
-const UpdateInviteModal = dynamic(() => import('@/components/support/user/team/UpdateInviteModal'));
 const NotSufficientModal = dynamic(() => import('@/components/support/wallet/NotSufficientModal'));
 const SystemMsgModal = dynamic(() => import('@/components/support/user/inform/SystemMsgModal'));
 const ImportantInform = dynamic(() => import('@/components/support/user/inform/ImportantInform'));
@@ -51,14 +50,13 @@ export const navbarWidth = '64px';
 
 const Layout = ({ children }: { children: JSX.Element }) => {
   const router = useRouter();
-  const { t } = useTranslation();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { Loading } = useLoading();
   const { loading, feConfigs, notSufficientModalType, llmModelList, embeddingModelList } =
     useSystemStore();
   const { isPc } = useSystem();
-  const { userInfo, teamPlanStatus, isUpdateNotification, setIsUpdateNotification } =
-    useUserStore();
+  const { userInfo, isUpdateNotification, setIsUpdateNotification } = useUserStore();
   const { setUserDefaultLng } = useI18nLng();
 
   const isChatPage = useMemo(
@@ -96,13 +94,13 @@ const Layout = ({ children }: { children: JSX.Element }) => {
             status: 'warning',
             title: t('common:llm_model_not_config')
           });
-          router.push('/account/model');
+          router.pathname !== '/account/model' && router.push('/account/model');
         } else if (embeddingModelList.length === 0) {
           toast({
             status: 'warning',
             title: t('common:embedding_model_not_config')
           });
-          router.push('/account/model');
+          router.pathname !== '/account/model' && router.push('/account/model');
         }
       }
     },
@@ -152,7 +150,6 @@ const Layout = ({ children }: { children: JSX.Element }) => {
       </Box>
       {feConfigs?.isPlus && (
         <>
-          {!!userInfo && <UpdateInviteModal />}
           {notSufficientModalType && <NotSufficientModal type={notSufficientModalType} />}
           {!!userInfo && <SystemMsgModal />}
           {showUpdateNotification && (

@@ -18,6 +18,7 @@ import { DatasetItemType, DatasetTagType } from '@fastgpt/global/core/dataset/ty
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import { ParentTreePathItemType } from '@fastgpt/global/common/parentFolder/type';
 import { useRequest2 } from '@fastgpt/web/hooks/useRequest';
+import { getWebLLMModel } from '@/web/common/system/utils';
 
 type DatasetPageContextType = {
   datasetId: string;
@@ -116,6 +117,8 @@ export const DatasetPageContextProvider = ({
       setDatasetDetail((state) => ({
         ...state,
         ...data,
+        agentModel: getWebLLMModel(data.agentModel),
+        vlmModel: getWebLLMModel(data.vlmModel),
         apiServer: data.apiServer
           ? {
               baseUrl: data.apiServer.baseUrl,
@@ -247,7 +250,10 @@ export const DatasetPageContextProvider = ({
 
   const { data: paths = [], runAsync: refetchPaths } = useRequest2(
     () =>
-      getDatasetPaths(datasetDetail.parentId).then((res) => {
+      getDatasetPaths({
+        sourceId: datasetDetail?._id,
+        type: 'parent'
+      }).then((res) => {
         res.push({
           parentId: '',
           parentName: datasetDetail.name

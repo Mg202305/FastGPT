@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Flex, Button, InputGroup, InputLeftElement, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { serviceSideProps } from '@fastgpt/web/common/system/nextjs';
+import { serviceSideProps } from '@/web/common/i18n/utils';
 import ParentPaths from '@/components/common/folder/Path';
 import List from '@/pageComponents/dataset/list/List';
 import { DatasetsContext } from './context';
@@ -71,7 +71,7 @@ const Dataset = () => {
       ) {
         return toast({
           status: 'warning',
-          title: t('common:common.system.Commercial version function')
+          title: t('common:commercial_function_tip')
         });
       }
       setCreateDatasetType(e);
@@ -148,7 +148,7 @@ const Dataset = () => {
                     <Button variant={'primary'} px="0">
                       <Flex alignItems={'center'} px={5}>
                         <AddIcon mr={2} />
-                        <Box>{t('common:common.Create New')}</Box>
+                        <Box>{t('common:new_create')}</Box>
                       </Flex>
                     </Button>
                   }
